@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>ajax.html</title>
+  </head>
+
+  <body>
+    <h1 id="status">Ajax通信中...</h1>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      //Ajax（非同期通信）
+      $.ajax({
+        type: 'POST', //GET,POST
+        url: 'ajax.php', //通信先URL
+        data: {
+          //Dataプロパティはデータを送信（渡す）役目
+          id: 1,
+          mode: 'hoge',
+          type: 'entry'
+        },
+        dataType: 'json', //text, html, xml, json, jsonp, script,帰ってくる形を指定する。
+        success: function(data) {
+          $('#status').text('通信完了！');
+          console.log(data); //データの中を見よう！
+          $('h1').html(data[0].mode);
+        },
+        error: function(error) {
+          alert('通信エラー');
+          //console.log(error); //戻り値Allオブジェクト
+        },
+        complete: function() {
+          //成功＆エラー処理後に必ず実行したい処理を記述する
+          $('body').append('完了');
+        }
+      });
+    </script>
+  </body>
+</html>
